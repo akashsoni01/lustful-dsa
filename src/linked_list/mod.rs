@@ -60,4 +60,15 @@ impl<T> LinkedList<T> {
             current = node.next.as_mut();
         }
     }
+
+    fn traverse(&self)
+    where
+        T: std::fmt::Debug,
+    {
+        let mut current = self.head.as_ref();
+        while let Some(node) = current {
+            println!("{:?}", node.data);
+            current = node.next.as_ref();
+        }
+    }
 }
