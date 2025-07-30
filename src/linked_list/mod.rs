@@ -30,6 +30,22 @@ impl<T> LinkedList<T> {
         self.head = Some(new_node);
     }
 
+    pub fn find(&self, target_value: &T) -> bool
+    where
+        T: Eq,
+    {
+        let mut current = self.head.as_ref(); // Get an immutable reference to the head
+
+        while let Some(node) = current {
+            if node.data == *target_value {
+                return true; // Found the value
+            }
+            current = node.next.as_ref(); // Move to the next node
+        }
+
+        false // Value not found after traversing the entire list
+    }
+
     pub fn delete_first(&mut self) {
         self.head = self.head.as_mut().and_then(|node| node.next.take());
     }
