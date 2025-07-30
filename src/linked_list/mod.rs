@@ -17,6 +17,14 @@ impl<T> Default for LinkedList<T> {
     }
 }
 
+pub struct IterMut<'a, T: 'a>(Option<&'a mut Node<T>>);
+
+impl<T> LinkedList<T> {
+    fn iter_mut(&mut self) -> IterMut<T> {
+        IterMut(self.head.as_mut().map(|node| &mut **node))
+    }
+}
+
 impl<T> LinkedList<T> {
     pub fn new() -> Self {
         Self { head: None }
