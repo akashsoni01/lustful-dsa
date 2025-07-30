@@ -13,3 +13,9 @@ impl<T> LinkedList<T> {
         Self{ head: None }
     }
 }
+
+impl<T> Default for LinkedList<T> {
+    fn default() -> Self {
+        Self { head: Default::default() }
+    }
+}
