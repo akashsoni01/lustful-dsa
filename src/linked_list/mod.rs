@@ -29,4 +29,8 @@ impl<T> LinkedList<T> {
         });
         self.head = Some(new_node);
     }
+
+    pub fn delete_first(&mut self) {
+        self.head = self.head.as_mut().and_then(|node| node.next.take());
+    }
 }
