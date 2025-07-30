@@ -20,7 +20,7 @@ impl<T> Default for LinkedList<T> {
 pub struct IterMut<'a, T: 'a>(Option<&'a mut Node<T>>);
 
 impl<T> LinkedList<T> {
-    fn iter_mut(&mut self) -> IterMut<T> {
+    pub fn iter_mut(&mut self) -> IterMut<T> {
         IterMut(self.head.as_mut().map(|node| &mut **node))
     }
 }
@@ -47,6 +47,14 @@ impl<T> LinkedList<T> {
             next: self.head.take(),
         });
         self.head = Some(new_node);
+    }
+
+    pub fn push_back(&mut self, data: T) {
+        let mut current = &mut self.head;
+        while let Some(node) = current {
+            current = &mut node.next;
+        }
+        *current = Some(Box::new(Node { data, next: None }));
     }
 
     pub fn find(&self, target_value: &T) -> bool
