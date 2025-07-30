@@ -33,4 +33,31 @@ impl<T> LinkedList<T> {
     pub fn delete_first(&mut self) {
         self.head = self.head.as_mut().and_then(|node| node.next.take());
     }
+
+    fn delete(&mut self, value: T)
+    where
+        T: Eq,
+    {
+        // Special case: delete from head
+        while let Some(ref node) = self.head {
+            if node.data == value {
+                self.head = self.head.take().and_then(|node| node.next);
+                return;
+            } else {
+                break;
+            }
+        }
+
+        // General case: traverse and delete
+        let mut current = self.head.as_mut();
+        while let Some(node) = current {
+            if let Some(ref mut next_node) = node.next {
+                if next_node.data == value {
+                    node.next = next_node.next.take(); // skip over matched node
+                    return;
+                }
+            }
+            current = node.next.as_mut();
+        }
+    }
 }
