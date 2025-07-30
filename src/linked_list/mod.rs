@@ -25,6 +25,17 @@ impl<T> LinkedList<T> {
     }
 }
 
+impl<'a, T> Iterator for IterMut<'a, T> {
+    type Item = &'a mut T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.0.take().map(|node| {
+            self.0 = node.next.as_mut().map(|node| &mut **node);
+            &mut node.data
+        })
+    }
+}
+
 impl<T> LinkedList<T> {
     pub fn new() -> Self {
         Self { head: None }
